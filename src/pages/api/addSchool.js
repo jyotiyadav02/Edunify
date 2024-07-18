@@ -12,12 +12,19 @@ const pool = createPool({
   queueLimit: 0,
 });
 
+// const storage = multer.diskStorage({
+//   destination: './public/schoolImages',
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + '_' + file.originalname);
+//   },
+// });
 const storage = multer.diskStorage({
-  destination: './public/schoolImages',
+  destination: process.env.NODE_ENV === 'production' ? '/tmp' : './public/schoolImages',
   filename: (req, file, cb) => {
     cb(null, Date.now() + '_' + file.originalname);
   },
 });
+
 
 const upload = multer({
   storage,
